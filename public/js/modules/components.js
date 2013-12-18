@@ -26,13 +26,13 @@ define(['jquery'], function ($) {
 		carouselSettings : {
 			scroll : 1,
 			itemFallbackDimension: '100%',
-			itemVisibleInCallback : app.captureCarouselRecommendations
+			itemVisibleInCallback : captureCarouselRecommendations
 		},
 		init : function () {
 			setTimeout(function(){
 			// renders horizontal/vertical carousels for product slots
-			$('#vertical-carousel').jcarousel($.extend({vertical : true}, app.components.carouselSettings));
-			$('#horizontal-carousel').jcarousel(app.components.carouselSettings);
+			$('#vertical-carousel').jcarousel($.extend({vertical : true}, components.carouselSettings));
+			$('#horizontal-carousel').jcarousel(components.carouselSettings);
 			}, 1000);
 		}
 	};
