@@ -1,7 +1,7 @@
 /**
  * @class app.account
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {};
 	/**
 	 * @private
@@ -170,7 +170,7 @@
 	}
 
 	/******* app.account public object ********/
-	app.account = {
+	account = {
 		/**
 		 * @function
 		 * @description Binds the events of the order, address and payment pages
@@ -181,4 +181,5 @@
 			app.giftcert.init();
 		}
 	};
-}(window.app = window.app || {}, jQuery));
+	return account;
+});

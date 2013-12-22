@@ -8,33 +8,25 @@ define(function () {
      * @alias module : module
      */
     var module = {
-    	element : '#wrapper',
     	/**
     	 * initialize module
     	 */
     	init : function(app){
-    		var _this = this,
-    			el	  = $(_this.element);
     		
-    		require(['modules/core'],function(module){		
+    		require(['core'],function(module){		
     			
-				module.init();
-				
-				if(typeof app  && app.pagecontext ){
-	    			//get modulename from page context 
-	    			_module = app.pagecontext.ns;
-	    			
-	    			//initialize required module
-	    			require(['modules/'+_module],function(module){
-	    				
-	    				module.init();
-	    				
-	    			});
-	    		}
-				
-			});
-    		
-    		
+				module.init(function(){
+					// Page Specific Module Initializations
+					var ns = app._module;
+					if (ns && typeof(ns)!=='undefined') {
+						console.log(ns)
+						require([ns],function(module){
+		    				module.init();
+		    				
+		    			});
+					}
+				});				
+			});    		
     	}    	
     };
     

@@ -1,7 +1,7 @@
 /**
  * @class app.registry
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {};
 	/**
 	 * @function
@@ -174,7 +174,7 @@
 	}
 
 	/******* app.registry public object ********/
-	app.registry = {
+	registry = {
 		init : function () {
 			initializeCache();
 			initializeDom();
@@ -184,5 +184,5 @@
 		}
 
 	};
-
-}(window.app = window.app || {}, jQuery));
+	return registry;
+});

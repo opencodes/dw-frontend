@@ -1,9 +1,8 @@
 /**
 @class storefront
 */
-var jcarousel = 'js/lib/jquery/jcarousel/jquery.jcarousel.min.js';
 
-define(['jquery',jcarousel], function ($,jcarousel) {
+define(['jquery','jquery.jcarousel'], function ($,jcarousel) {
 	var $cache = {};
 	storefront = {
 		init : function () {

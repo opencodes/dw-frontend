@@ -1,7 +1,7 @@
 /**
  * @class app.cart
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {};
 	/**
 	 * @private
@@ -51,7 +51,7 @@
 		});
 	}
 	/******* app.cart public object ********/
-	app.cart = {
+	cart = {
 		/**
 		 * @function
 		 * @description Adds new item to the cart
@@ -99,5 +99,6 @@
 			}
 		}
 	};
+	return cart;
 
 }(window.app = window.app || {}, jQuery));

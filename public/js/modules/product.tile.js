@@ -2,7 +2,7 @@
 /**
  * @class app.product.tile
  */
-(function (app, $) {
+define(['jquery','product','product.tile','quickview'], function ($,product,product_tile,quickView) {
 	var $cache = {};
 
 	/**
@@ -23,7 +23,7 @@
 	 * <p>thumbnails</p>
 	 */
 	function initializeEvents() {
-		app.quickView.initializeButton($cache.container, ".product-image");
+		quickView.initializeButton($cache.container, ".product-image");
 		$cache.container.on("mouseleave", ".swatch-list", function(e){
 			// Restore current thumb image
 			var tile = $(this).closest(".grid-tile");
@@ -82,7 +82,7 @@
 	}
 
 	/*************** app.product.tile public object ***************/
-	app.product.tile = {
+	product_tile = {
 		/**
 		 * @function
 		 * @description Cache, events and initialization
@@ -95,6 +95,6 @@
 			initializeDom();
 		}
 	};
-
-}(window.app = window.app || {}, jQuery));
+	return product_tile;
+});
 

@@ -1,7 +1,7 @@
 /**
  * @class app.quickview
  */
-(function (app, $) {
+define(['jquery','product','quickview','jquery.ui'], function ($,product,quickView) {
 	var $cache = {};
 	/**
 	 * @function
@@ -10,7 +10,7 @@
 	function bindQvButton() {
 		$cache.qvButton.one("click", function (e) {
 			e.preventDefault();
-			app.quickView.show({
+			quickView.show({
 				url : $(this).attr("href"),
 				source : "quickview"
 			});
@@ -18,7 +18,7 @@
 	}
 
 	/******* app.quickView public object ********/
-	app.quickView = {
+	quickView = {
 		/**
 		 * @function
 		 * @description
@@ -39,7 +39,7 @@
 			});
 		},
 		init : function () {
-			if(app.quickView.exists()) {
+			if(quickView.exists()) {
 				return $cache.quickView;
 			}
 
@@ -54,10 +54,10 @@
 		 * @description
 		 */
 		show : function (options) {
-			options.target = app.quickView.init();
+			options.target = quickView.init();
 			options.callback = function () {
-				app.product.init();
-				app.dialog.create({
+				product.init();
+				dialog.create({
 					target : $cache.quickView,
 					options : {
 						height : 'auto',
@@ -73,7 +73,7 @@
 				});
 				$cache.quickView.dialog('open');
 			};
-			app.product.get(options);
+			product.get(options);
 
 			return $cache.quickView;
 		},
@@ -92,5 +92,6 @@
 		},
 		container : $cache.quickView
 	};
+	return quickView;
 
-}(window.app = window.app || {}, jQuery));
+});

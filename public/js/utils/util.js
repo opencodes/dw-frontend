@@ -1,7 +1,7 @@
 /**
  * @class app.util
  */
-define(['jquery'], function ($) {
+define(function () {
 
 	// sub namespace app.util.* contains utility functions
 	util = {

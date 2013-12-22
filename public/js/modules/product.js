@@ -2,7 +2,7 @@
 /**
  @class app.product
  */
-(function (app, $) {
+define(['jquery','quickview','sendToFriend','util','ajax','progress'], function ($,quickView,sendToFriend ) {
 	var $cache;
 
 	/*************** app.product private vars and functions ***************/
@@ -27,7 +27,7 @@
 		}
 
 		var url = app.urls.productNav+(app.urls.productNav.indexOf("?") < 0 ? "?" : "&")+hashParams;
-		app.ajax.load({url:url, target: navContainer});
+		ajax.load({url:url, target: navContainer});
 	}
 
 	/**
@@ -41,7 +41,7 @@
 			return;
 		}
 
-		carousel.jcarousel(app.components.carouselSettings);
+		carousel.jcarousel(components.carouselSettings);
 	}
 
 	/**
@@ -91,7 +91,7 @@
 	 * @description Enables the zoom viewer on the product detail page
 	 */
 	function loadZoom() {
-		if(app.quickView.isActive() || !app.zoomViewerEnabled) { return; }
+		if(quickView.isActive() || !zoomViewerEnabled) { return; }
 
 		//zoom properties
 		var options = {
@@ -133,7 +133,7 @@
 	 * @description Adds css class (image-zoom) to the main product image in order to activate the zoom viewer on the product detail page.
 	 */
 	function setMainImageLink() {
-		if (app.quickView.isActive() || app.isMobileUserAgent) {
+		if (quickView.isActive() || app.isMobileUserAgent) {
 			$cache.pdpMain.find("a.main-image").removeAttr("href");
 		}
 		else {
@@ -156,7 +156,7 @@
 	function initializeDom() {
 		$cache.pdpMain.find('div.product-detail .product-tabs').tabs();
 		if($('#pwrwritediv').length > 0) {
-			var options = $.extend(true, {}, app.dialog.settings, {
+			var options = $.extend(true, {}, dialog.settings, {
 				autoOpen : true,
 				height : 750,
 				width : 650,
@@ -165,8 +165,8 @@
 				resizable : false
 			});
 
-			app.dialog.create({
-				target : app.ui.reviewsContainer,
+			dialog.create({
+				target : ui.reviewsContainer,
 				options : options
 			});
 		}
@@ -184,7 +184,7 @@
 			}
 		}
 
-		app.tooltips.init();
+		tooltips.init();
 	}
 	/**
 	 * @private
@@ -223,13 +223,13 @@
 	 */
 	function initializeEvents() {
 
-		app.product.initAddThis();
-		if(app.enabledStorePickup){app.storeinventory.buildStoreList($('.product-number span').html());}
+		product.initAddThis();
+		if(app.enabledStorePickup){storeinventory.buildStoreList($('.product-number span').html());}
 		// add or update shopping cart line item
-		app.product.initAddToCart();
+		product.initAddToCart();
 		$cache.pdpMain.on("change keyup", "form.pdpForm input[name='Quantity']", function (e) {
 			var availabilityContainer = $cache.pdpMain.find("div.availability");
-			app.product.getAvailability(
+			product.getAvailability(
 				$("#pid").val(),
 				$(this).val(),
 				function (data) {
@@ -321,11 +321,11 @@
 		$cache.pdpMain.on("click", "a.wl-action", function (e) {
 			e.preventDefault();
 
-			var data = app.util.getQueryStringParams($("form.pdpForm").serialize());
+			var data = util.getQueryStringParams($("form.pdpForm").serialize());
 			if (data.cartAction) {
 				delete data.cartAction;
 			}
-			var url = app.util.appendParamsToUrl(this.href, data);
+			var url = util.appendParamsToUrl(this.href, data);
 			url = this.protocol + "//" + this.hostname + ((url.charAt(0)==="/") ? url : ("/"+url));
 			window.location.href = url;
 		});
@@ -376,22 +376,22 @@
 				};
 			if( listid ) params.productlistid = listid;
 			var target = (productSet.length > 0 && productSet.children.length > 0) ? productSet : $cache.productContent;
-			var url = app.util.appendParamsToUrl($(this).val(), params);
-			app.progress.show($cache.pdpMain);
+			var url = util.appendParamsToUrl($(this).val(), params);
+			progress.show($cache.pdpMain);
 			
 			var hasSwapImage = $(this).find("option:selected").attr("data-lgimg") !== null;
 			
-			app.ajax.load({
+			ajax.load({
 				url: url,
 				callback : function (data) {
 					target.html(data);
-					app.product.initAddThis();
-					app.product.initAddToCart();
+					product.initAddThis();
+					product.initAddToCart();
 					if (hasSwapImage) {
 						replaceImages();
 					}
 					$("update-images").remove();
-					app.tooltips.init();
+					tooltips.init();
 				}
 			});
 		});
@@ -415,20 +415,20 @@
 			if( listid ) params.productlistid = listid;
 
 			var target = (productSet.length > 0 && productSet.children.length > 0) ? productSet : $cache.productContent;
-			var url = app.util.appendParamsToUrl(this.href, params);
-			app.progress.show($cache.pdpMain);
+			var url = util.appendParamsToUrl(this.href, params);
+			progress.show($cache.pdpMain);
 
-			app.ajax.load({
+			ajax.load({
 				url: url,
 				callback : function (data) {
 					target.html(data);
-					app.product.initAddThis();
-					app.product.initAddToCart();
-					if(app.enabledStorePickup){app.storeinventory.buildStoreList($('.product-number span').html());}
+					product.initAddThis();
+					product.initAddToCart();
+					if(app.enabledStorePickup){storeinventory.buildStoreList($('.product-number span').html());}
 					if (hasSwapImage) {
 						replaceImages();
 					}
-					app.tooltips.init();
+					tooltips.init();
 				}
 			});
 		});
@@ -436,7 +436,7 @@
 		$cache.productSetList.on("click", "div.product-set-item li a[href].swatchanchor", function (e) {
 			e.preventDefault();
 			// get the querystring from the anchor element
-			var params = app.util.getQueryStringParams(this.search);
+			var params = util.getQueryStringParams(this.search);
 			var psItem = $(this).closest(".product-set-item");
 
 			// set quantity to value from form
@@ -448,7 +448,7 @@
 			// get container
 			var ic = $(this).closest(".product-set-item");
 			ic.load(url, function () {
-				app.progress.hide();
+				progress.hide();
 				if ($cache.productSetList.find("button.add-to-cart[disabled]").length>0) {
 					$cache.addAllToCart.attr("disabled","disabled");
 					$cache.addToCart.attr("disabled","disabled"); // this may be a bundle
@@ -458,8 +458,8 @@
 					$cache.addToCart.removeAttr("disabled"); // this may be a bundle
 				}
 
-				app.product.initAddToCart(ic);
-				app.tooltips.init();
+				product.initAddToCart(ic);
+				tooltips.init();
 			});
 		});
 
@@ -467,7 +467,7 @@
 			e.preventDefault();
 			var psForms = $cache.productSetList.find("form").toArray(),
 				miniCartHtml = "",
-				addProductUrl = app.util.ajaxUrl(app.urls.addProduct);
+				addProductUrl = util.ajaxUrl(app.urls.addProduct);
 
 			// add items to cart
 			function addItems() {
@@ -499,15 +499,15 @@
 						addItems();
 					}
 					else {
-						app.quickView.close();
-						app.minicart.show(miniCartHtml);
+						quickView.close();
+						minicart.show(miniCartHtml);
 					}
 				});
 			}
 			addItems();
 			return false;
 		});
-		app.sendToFriend.initializeDialog($cache.pdpMain, "a.send-to-friend");
+		sendToFriend.initializeDialog($cache.pdpMain, "a.send-to-friend");
 
 		$cache.pdpMain.find("button.add-to-cart[disabled]").attr('title', $cache.pdpMain.find(".availability-msg").html() );
 	}
@@ -526,16 +526,16 @@
 		}
 
 		var data = form.serialize();
-		app.cart.update(data, function (response) {
+		cart.update(data, function (response) {
 			var uuid = form.find("input[name='uuid']");
 			if (uuid.length > 0 && uuid.val().length > 0) {
-				app.cart.refresh();
+				cart.refresh();
 			}
 			else {
 				if (!isSubItem) {
-					app.quickView.close();
+					quickView.close();
 				}
-				app.minicart.show(response);
+				minicart.show(response);
 			}
 		});
 	}
@@ -543,14 +543,14 @@
 
 
 	/*************** app.product public object ***************/
-	app.product = {
+	product = {
 		init : function () {
 			initializeCache();
 			initializeDom();
 			initializeEvents();
 			loadZoom();
 			if(app.enabledStorePickup){
-				app.storeinventory.init();
+				storeinventory.init();
 			}
 		},
 		readReviews : function(){
@@ -568,26 +568,26 @@
 		 * <p>id - id of the product to get, is optional only used when url is empty</p>
 		 */
 		get : function (options) {
-			var target = options.target || app.quickView.init();
+			var target = options.target || quickView.init();
 			var source = options.source || "";
 			var productListID = options.productlistid || "";
 
-			var productUrl = options.url || app.util.appendParamToURL(app.urls.getProductUrl, "pid", options.id);
+			var productUrl = options.url || util.appendParamToURL(app.urls.getProductUrl, "pid", options.id);
 			if(source.length > 0) {
-				productUrl = app.util.appendParamToURL(productUrl, "source", source);
+				productUrl = util.appendParamToURL(productUrl, "source", source);
 			}
 			if(productListID.length > 0) {
-				productUrl = app.util.appendParamToURL(productUrl, "productlistid", productListID);
+				productUrl = util.appendParamToURL(productUrl, "productlistid", productListID);
 			}
 
 			// show small loading image
 			//app.progress.show(app.ui.primary);
-			app.ajax.load({
+			ajax.load({
 				target : target,
 				url : productUrl,
 				data : options.data || "",
 				// replace with callback passed in by options
-				callback : options.callback || app.product.init
+				callback : options.callback || product.init
 			});
 		},
 		/**
@@ -595,8 +595,8 @@
 		 * @description Gets the availability to given product and quantity
 		 */
 		getAvailability : function (pid, quantity, callback) {
-			app.ajax.getJson({
-				url: app.util.appendParamsToUrl(app.urls.getAvailability, {pid:pid, Quantity:quantity}),
+			ajax.getJson({
+				url: util.appendParamsToUrl(app.urls.getAvailability, {pid:pid, Quantity:quantity}),
 				callback: callback
 			});
 		},
@@ -638,5 +638,5 @@
 			}
 		}
 	};
-
-}(window.app = window.app || {}, jQuery));
+	return product;
+});

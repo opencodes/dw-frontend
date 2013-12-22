@@ -9,8 +9,8 @@
  *    https://github.com/Demandware/Site-Genesis
  */
 /** @namespace */
-define(['jquery','util', 'searchsuggest', 'jquery.tooltip', 'tooltips','minicart','jquery.validate','validator','jquery.ui','components','searchplaceholder','page'], function ($) {
-	
+define(['jquery','util', 'searchsuggest', 'jquery.tooltip', 'tooltip','minicart','jquery.validate','validator','components','searchplaceholder'], function ($) {
+//,'page','jquery.ui',	
 	//allows the use of $ within this function without conflicting with other JavaScript libraries which are using it (JQuery extension)
 	document.cookie="dw=1";
 	/******** private functions & vars **********/
@@ -141,7 +141,7 @@ define(['jquery','util', 'searchsuggest', 'jquery.tooltip', 'tooltips','minicart
 		 * @function
 		 * @description Master page initialization routine
 		 */
-		init: function () {
+		init: function (callback) {
 
 			if (document.cookie.length===0) {
 				$("<div/>").addClass("browser-compatibility-alert").append($("<p/>").addClass("browser-error").html(app.resources.COOKIES_DISABLED)).appendTo("#browser-check");
@@ -163,15 +163,8 @@ define(['jquery','util', 'searchsuggest', 'jquery.tooltip', 'tooltips','minicart
 			validator.init();
 			components.init();
 			searchplaceholder.init();
-			// execute page specific initializations
-			var _module = page.ns;
-			if (_module) {
-				require(['modules/'+_module],function(module){
-    				
-    				module.init();
-    				
-    			});
-			}
+			
+			return callback();
 		}
 	};
 

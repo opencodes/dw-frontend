@@ -1,7 +1,7 @@
 /**
  * @class app.sendToFriend
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {},
 		initialized=false;
 	/**
@@ -43,7 +43,7 @@
 	}
 
 	/*************** app.sendToFriend public object ***************/
-	app.sendToFriend = {
+	sendToFriend = {
 		init : function () {
 			$cache = {
 				form: $("#send-to-friend-form"),
@@ -86,5 +86,6 @@
 			});
 		}
 	};
+	return sendToFriend;
 
-}(window.app = window.app || {}, jQuery));
+});

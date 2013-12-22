@@ -1,14 +1,14 @@
 /**
  * @class app.storeinventory
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 
 	var $cache = {};
 	var pid = null;
 	var currentTemplate = jQuery('#wrapper.pt_cart').length ? "cart" : "pdp";
 
 	/******* app.storeinventory public object ********/
-	app.storeinventory = {
+	storeinventory = {
 		/**
 		 * @function
 		 * @description
@@ -410,4 +410,5 @@
  		}
 
 	};
-}(window.app = window.app || {}, jQuery));
+	return storeinventory;
+});

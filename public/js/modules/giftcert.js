@@ -2,7 +2,7 @@
  * @class app.giftcert
  * @description Loads gift certificate details
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache;
 
 	function setAddToCartHandler(e) {
@@ -58,10 +58,11 @@
 		$cache.addToCart.on('click', setAddToCartHandler);
 	}
 
-	app.giftcert = {
+	giftcert = {
 		init : function(){
 			initializeCache();
 			initializeEvents();
 		}
 	};
+	return giftcert;
 }(window.app = window.app || {}, jQuery));

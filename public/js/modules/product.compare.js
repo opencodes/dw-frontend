@@ -1,7 +1,7 @@
 /**
  * @class app.product.compare
  */
-(function (app, $) {
+define(['jquery','product'], function ($,product) {
 	var $cache = {},
 		_currentCategory = "",
 		_isClearing = false,
@@ -173,7 +173,7 @@
 	}
 
 	/*************** app.product.compare public object ***************/
-	app.product.compare = {
+	product_compare = {
 		/**
 		 * @function
 		 * @description Cache, events and initialization
@@ -255,5 +255,6 @@
 			});
 		}
 	};
+	return product_compare;
 
-}(window.app = window.app || {}, jQuery));
+});

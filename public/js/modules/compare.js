@@ -1,7 +1,7 @@
 /**
  * @class app.compare
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {};
 	/**
 	 * @private
@@ -53,7 +53,7 @@
 	}
 
 	/*************** app.compare public object ***************/
-	app.compare = {
+	compare = {
 		/**
 		 * @function
 		 * @description Initializing of Cache, DOM and events
@@ -65,6 +65,6 @@
 			app.product.initAddToCart();
 		}
 	};
-
+	return compare;
 
 }(window.app = window.app || {}, jQuery));

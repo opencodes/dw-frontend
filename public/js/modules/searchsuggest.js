@@ -1,7 +1,7 @@
 /**
- * @class app.searchsuggest
+ * @class searchsuggest
  */
-define(['jquery'], function ($) {
+define(['jquery','util'], function ($,util) {
 	var qlen = 0,
 		listTotal = -1,
 		listCurrent = -1,
@@ -38,7 +38,7 @@ define(['jquery'], function ($) {
 		return true;
 	}
 
-	/******* app.searchsuggest public object ********/
+	/******* searchsuggest public object ********/
 	searchsuggest = {
 		/**
 		 * @function
@@ -70,7 +70,7 @@ define(['jquery'], function ($) {
 			});
 			// on blur listener
 			$searchField.blur(function () {
-				setTimeout(app.searchsuggest.clearResults, 200);
+				setTimeout(searchsuggest.clearResults, 200);
 			});
 			// on key up listener
 			$searchField.keyup(function (e) {
@@ -84,14 +84,14 @@ define(['jquery'], function ($) {
 				}
 				// check for an ENTER or ESC
 				if(keyCode === 13 || keyCode === 27) {
-					app.searchsuggest.clearResults();
+					searchsuggest.clearResults();
 					return;
 				}
 
 				var lastVal = $searchField.val();
 
 				// if is text, call with delay
-				setTimeout(function () { app.searchsuggest.suggest(lastVal); }, delay);
+				setTimeout(function () { searchsuggest.suggest(lastVal); }, delay);
 			});
 			// on submit we do not submit the form, but change the window location
 			// in order to avoid https to http warnings in the browser
@@ -102,7 +102,7 @@ define(['jquery'], function ($) {
 				if(searchTerm === fieldDefault || searchTerm.length === 0) {
 					return false;
 				}
-				window.location = app.util.appendParamToURL($(this).attr("action"), "q", searchTerm);
+				window.location = util.appendParamToURL($(this).attr("action"), "q", searchTerm);
 			});
 		},
 
@@ -117,7 +117,7 @@ define(['jquery'], function ($) {
 
 			// if it's empty clear the resuts box and return
 			if(part.length === 0) {
-				app.searchsuggest.clearResults();
+				searchsuggest.clearResults();
 				return;
 			}
 
@@ -131,7 +131,7 @@ define(['jquery'], function ($) {
 			qlen = part.length;
 
 			// build the request url
-			var reqUrl = app.util.appendParamToURL(app.urls.searchsuggest, "q", part);
+			var reqUrl = util.appendParamToURL(app.urls.searchsuggest, "q", part);
 
 			// get remote data as JSON
 			$.getJSON(reqUrl, function (data) {
@@ -142,7 +142,7 @@ define(['jquery'], function ($) {
 
 				// if there are results populate the results div
 				if(ansLength === 0) {
-					app.searchsuggest.clearResults();
+					searchsuggest.clearResults();
 					return;
 				}
 				suggestionsJson = suggestions;
@@ -158,7 +158,7 @@ define(['jquery'], function ($) {
 				}).on("click", "div", function () {
 					// on click copy suggestion to search field, hide the list and submit the search
 					$searchField.val($(this).children(".suggestionterm").text());
-					app.searchsuggest.clearResults();
+					searchsuggest.clearResults();
 					$searchForm.trigger("submit");
 				});
 			});

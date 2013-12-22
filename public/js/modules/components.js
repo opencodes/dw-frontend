@@ -1,7 +1,9 @@
 /**
  * @class app.components
  */
-define(['jquery'], function ($) {
+var jcarousel = 'lib/jquery/jcarousel/jquery.jcarousel.min';
+
+define(['jquery',jcarousel], function ($) {
 	/**
 	 * @function
 	 * @description capture recommendation of each product when it becomes visible in the carousel
@@ -13,12 +15,12 @@ define(['jquery'], function ($) {
 	function captureCarouselRecommendations(c, li, index, state) {
 		if (!dw) { return; }
 
-		$(li).find(".capture-product-id").each(function () {
+		/*$(li).find(".capture-product-id").each(function () {
 			dw.ac.capture({
 				id : $(this).text(),
 				type : dw.ac.EV_PRD_RECOMMENDATION
 			});
-		});
+		});*/
 	}
 
 	/******* app.components public object ********/
@@ -26,7 +28,7 @@ define(['jquery'], function ($) {
 		carouselSettings : {
 			scroll : 1,
 			itemFallbackDimension: '100%',
-			itemVisibleInCallback : captureCarouselRecommendations
+			itemVisibleInCallback : 1
 		},
 		init : function () {
 			setTimeout(function(){

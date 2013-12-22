@@ -1,13 +1,13 @@
 /**
  * @class app.ajax
  */
-(function (app, $) {
+define(['jquery','util','progress'], function ($) {
 
 	var currentRequests = [];
 	// request cache
 
 	// sub namespace app.ajax.* contains application specific ajax components
-	app.ajax = {
+	ajax = {
 		/**
 		 * @function
 		 * @description Ajax request to get json response
@@ -17,7 +17,7 @@
 		 * @param {Function} callback  Callback function to be called
 		 */
 		getJson : function (options) {
-			options.url = app.util.toAbsoluteUrl(options.url);
+			options.url = util.toAbsoluteUrl(options.url);
 			// return if no url exists or url matches a current request
 			if(!options.url || currentRequests[options.url]) {
 				return;
@@ -64,7 +64,7 @@
 		 * @param {Object} target Selector or element that will receive content
 		 */
 		load : function (options) {
-			options.url = app.util.toAbsoluteUrl(options.url);
+			options.url = util.toAbsoluteUrl(options.url);
 			// return if no url exists or url matches a current request
 			if(!options.url || currentRequests[options.url]) {
 				return;
@@ -75,7 +75,7 @@
 			// make the server call
 			$.ajax({
 				dataType : "html",
-				url : app.util.appendParamToURL(options.url, "format", "ajax"),
+				url : util.appendParamToURL(options.url, "format", "ajax"),
 				data : options.data
 			})
 			.done(function (response) {
@@ -96,7 +96,7 @@
 				options.callback(null, textStatus);
 			})
 			.always(function () {
-				app.progress.hide();
+				progress.hide();
 				// remove current request from hash
 				if(currentRequests[options.url]) {
 					delete currentRequests[options.url];
@@ -104,4 +104,5 @@
 			});
 		}
 	};
-}(window.app = window.app || {}, jQuery));
+	return ajax;
+});

@@ -1,7 +1,7 @@
 /**
  * @class app.wishlist
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {};
 	/**
 	 * @private
@@ -18,7 +18,7 @@
 
 
 	/******* app.wishlist public object ********/
-	app.wishlist = {
+	wishlist = {
 		/**
 		 * @function
 		 * @description Binds events to the wishlist page
@@ -31,4 +31,5 @@
 
 		}
 	};
-}(window.app = window.app || {}, jQuery));
+	return wishlist;
+});

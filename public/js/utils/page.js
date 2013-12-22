@@ -1,7 +1,7 @@
 /**
  * @class app.page
  */
-define(['jquery','util'], function ($) {
+define(['util'], function ($) {
 
 	page = {
 		title : "",

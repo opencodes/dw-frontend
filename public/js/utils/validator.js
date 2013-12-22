@@ -1,5 +1,5 @@
 /**
- * @class app.validator
+ * @class validator
  */
 define(['jquery','jquery.validate'], function ($) {
 
@@ -101,12 +101,12 @@ define(['jquery','jquery.validate'], function ($) {
 		init : function () {
 
 			$("form:not(.suppress)").each(function () {
-				$(this).validate(app.validator.settings);
+				$(this).validate(validator.settings);
 			});
 
 		},
 		initForm : function(f) {
-			$(f).validate(app.validator.settings);
+			$(f).validate(validator.settings);
 		}
 	};
 	return validator;

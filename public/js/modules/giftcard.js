@@ -2,9 +2,9 @@
  * @class app.giftcard
  * @description Loads gift certificate details
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 
-	app.giftcard = {
+	giftcard = {
 		/**
 		 * @function
 		 * @description Load details to a given gift certificate
@@ -21,4 +21,5 @@
 			});
 		}
 	};
+	return giftcard;
 }(window.app = window.app || {}, jQuery));

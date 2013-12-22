@@ -1,9 +1,9 @@
 /**
  * @class app.progress
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var loader;
-	app.progress = {
+	progress = {
 		/**
 		 * @function
 		 * @description Shows an AJAX-loader on top of a given container
@@ -28,4 +28,5 @@
 			if (loader) { loader.hide(); }
 		}
 	};
-}(window.app = window.app || {}, jQuery));
+	return progress;
+});

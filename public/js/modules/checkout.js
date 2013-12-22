@@ -1,7 +1,7 @@
 /**
  * @class app.checkout
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {},
 		isShipping = false,
 		isMultiShipping = false,
@@ -570,11 +570,12 @@
 	}
 
 	/******* app.checkout public object ********/
-	app.checkout = {
+	checkout = {
 		init : function () {
 			initializeCache();
 			initializeDom();
 			initializeEvents();
 		}
 	};
-}(window.app = window.app || {}, jQuery));
+	return checkout;
+});

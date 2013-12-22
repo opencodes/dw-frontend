@@ -1,7 +1,7 @@
 /**
  * @class app.bonusProductsView
  */
-(function (app, $) {
+define(['jquery'], function ($) {
 	var $cache = {};
 	var selectedList = [];
 	var maxItems = 1;
@@ -73,7 +73,7 @@
 		}
 	}
 	/********* public app.bonusProductsView object *********/
-	app.bonusProductsView = {
+	bonusProductsView = {
 		/**
 		 * @function
 		 * @description Initializes the bonus product dialog
@@ -302,5 +302,6 @@
 			});
 		}
 	};
+	return bonusProductsView;
 
-}(window.app = window.app || {}, jQuery));
+});

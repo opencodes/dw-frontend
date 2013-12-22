@@ -1,7 +1,7 @@
 /**
  * @class app.search
  */
-(function (app, $) {
+define(['jquery','product','product.tile','product.compare','jquery.hashchange'], function ($,product,product_tile,product_compare) {
 	var $cache = {};
 
 	/**
@@ -197,7 +197,7 @@
 		});
 	}
 	/******* app.search public object ********/
-	app.search = {
+	search = {
 		init : function () {
 			$cache = {
 				main : $("#main"),
@@ -205,15 +205,17 @@
 			};
 			$cache.content = $cache.main.find(".search-result-content");
 			//if (app.product.compare) {
-				app.product.compare.init();
+				product_compare.init();
 			//}
 			updateProductListing(false);
 			if (app.clientcache.LISTING_INFINITE_SCROLL){
 				initInfiniteScroll();
 			}
-			app.product.tile.init();
+			product_tile.init();
 			initializeEvents();
+			//app.responsive.toggleGridWideTileView();
 		}
 	};
+	return search;
 
-}(window.app = window.app || {}, jQuery));
+});
